@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { mainStyle, colors } from "../styles/MainStyle";
@@ -26,7 +27,18 @@ export default function ArticleFeed() {
 
   const toggleLoading = () => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
+    
+    // Timeout behaving strange, 100ms feels like 5s
+    // Related to state being async?
+    setTimeout(() => {
+      setLoading(false);
+      Alert.alert("Error", "Couldn't load more content", [
+        {
+          text: "Ok",
+          style: "cancel",
+        },
+      ]);
+    }, 100);
   };
 
   return (
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     width: "100%",
     marginBottom: 50,
     alignItems: "center",
